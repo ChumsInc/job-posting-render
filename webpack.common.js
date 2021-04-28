@@ -40,20 +40,20 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
     },
     optimization: {
-        splitChunks: {
-            cacheGroups: {
-                defaultVendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
-                    chunks: 'all',
-                },
-                chums: {
-                    test: /[\\/](common|chums)-components[\\/]/,
-                    name: 'chums',
-                    chunks: 'all',
-                },
-            }
-        }
+        // splitChunks: {
+        //     cacheGroups: {
+        //         defaultVendors: {
+        //             test: /[\\/]node_modules[\\/]/,
+        //             name: 'vendors',
+        //             chunks: 'all',
+        //         },
+        //         chums: {
+        //             test: /[\\/](common|chums)-components[\\/]/,
+        //             name: 'chums',
+        //             chunks: 'all',
+        //         },
+        //     }
+        // }
     },
     output: {
         path: path.join(__dirname, 'public/js'),

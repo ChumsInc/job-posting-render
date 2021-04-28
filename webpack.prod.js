@@ -4,7 +4,7 @@ const common = require('./webpack.common.js');
 const {WebpackManifestPlugin} = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 
 module.exports = merge(common, {
     mode: 'production',
@@ -26,7 +26,7 @@ module.exports = merge(common, {
         ],
     },
     output: {
-        filename: "[location].[contenthash].js",
+        filename: "[name].[contenthash].js",
     },
     plugins: [
         new CleanWebpackPlugin(),

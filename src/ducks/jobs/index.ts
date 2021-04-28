@@ -9,12 +9,13 @@ export const fetchJobsFailed = 'app/jobs/fetch-failed';
 
 
 export const fetchJobsURL = (id?: number, preview?: boolean) => {
-    return `/api/timeclock/job-postings/active/${encodeURIComponent(String(id || ''))}`
+    return `https://intranet.chums.com/api/timeclock/job-postings/active/${encodeURIComponent(String(id || ''))}`
         + (preview ? '?preview=1' : '');
 }
 
 export const selectList = (state: RootState) => state.jobs.list;
 export const selectLoading = (state: RootState) => state.jobs.loading;
+export const selectLoaded = (state: RootState) => state.jobs.loaded;
 
 
 async function fetchJobPostings(id?: number, preview?: boolean) {
@@ -93,6 +94,8 @@ export interface JobPosting {
     educationalRequirements: string,
     experienceRequirements: number
     experienceInPlaceOfEducation: boolean,
+    emailRecipient?: string,
+    applicationInstructions?: string,
     filename: string,
     timestamp: string,
     changed?: boolean,
@@ -108,11 +111,13 @@ export interface JobPostingThunkAction extends ThunkAction<void, RootState, unkn
 interface JobState {
     list: JobPosting[],
     loading: boolean,
+    loaded: boolean,
 }
 
 const initialJobState: JobState = {
     list: [],
     loading: false,
+    loaded: false,
 }
 
 const listReducer = (state: JobPosting[] = initialJobState.list, action: JobPostingsAction) => {
@@ -137,8 +142,21 @@ const loadingReducer = (state: boolean = initialJobState.loading, action: JobPos
     }
 }
 
+const loadedReducer = (state: boolean = initialJobState.loaded, action: JobPostingsAction) => {
+    switch (action.type) {
+    case fetchJobsRequested:
+    case fetchJobsFailed:
+        return false;
+    case fetchJobsSucceeded:
+        return true;
+    default:
+        return state;
+    }
+}
+
 
 export default combineReducers({
     list: listReducer,
     loading: loadingReducer,
+    loaded: loadedReducer,
 })
