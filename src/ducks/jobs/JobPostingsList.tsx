@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {loadJobPostings, selectList, selectLoading} from "./index";
-import {Alert} from "chums-ducks";
+import {Alert} from "chums-components";
 import JobPostingRender from "../../components/JobPostingRender";
 import JobLocation from "../../components/JobLocation";
 import JobPostingLink from "../../components/JobPostingLink";
+import {selectList, selectLoading} from "./selectors";
 
 const JobPostingsList:React.FC = () => {
     const loading = useSelector(selectLoading);

@@ -14,12 +14,6 @@ module.exports = {
                 // include: "/node_modules/chums-ducks/",
             },
             {
-                test: /\.jsx?$/,
-                use: ['babel-loader'],
-                exclude: /node_modules/,
-                include: "/node_modules/chums-components/",
-            },
-            {
                 test: /\.css$/,
                 use: [
                     {loader: 'style-loader'},
