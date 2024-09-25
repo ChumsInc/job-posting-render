@@ -26,11 +26,10 @@ module.exports = merge(common, {
         ],
     },
     output: {
-        filename: "[location].[contenthash].js",
+        filename: "[name].[contenthash:8].js",
     },
     plugins: [
         new CleanWebpackPlugin(),
         new WebpackManifestPlugin(),
-        new BundleAnalyzerPlugin(),
 ]
 });
