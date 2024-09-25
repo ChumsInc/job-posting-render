@@ -1,12 +1,11 @@
-import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React from "react";
+import {useSelector} from "react-redux";
 import {Alert} from "chums-components";
 import JobPostingRender from "../../components/JobPostingRender";
-import JobLocation from "../../components/JobLocation";
 import JobPostingLink from "../../components/JobPostingLink";
 import {selectList, selectLoading} from "./selectors";
 
-const JobPostingsList:React.FC = () => {
+const JobPostingsList: React.FC = () => {
     const loading = useSelector(selectLoading);
     const list = useSelector(selectList);
 
@@ -31,7 +30,7 @@ const JobPostingsList:React.FC = () => {
                 </ul>
             )}
             {list.map(posting => (
-                <JobPostingRender key={posting.id} posting={posting} />
+                <JobPostingRender key={posting.id} posting={posting}/>
             ))}
         </div>
     )

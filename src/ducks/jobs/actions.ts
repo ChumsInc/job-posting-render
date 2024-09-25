@@ -1,5 +1,5 @@
 import {selectLoading} from "./selectors";
-import {createAsyncThunk, GetThunkAPI} from "@reduxjs/toolkit";
+import {createAsyncThunk} from "@reduxjs/toolkit";
 import {JobPosting, LoadJobPosting} from "./types";
 import {fetchJobPostings} from "./api";
 import {RootState} from "../../app/configureStore";

@@ -1,5 +1,4 @@
 import {fetchJSON} from "chums-components";
-import jobPostingsList from "./JobPostingsList";
 import {JobPosting, LoadJobPosting} from "./types";
 
 export const fetchJobsURL = (arg: LoadJobPosting) => {
