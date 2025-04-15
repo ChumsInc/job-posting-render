@@ -1,5 +1,5 @@
 import React from "react";
-import {default as JobLocation, jobLocationLD} from "./JobLocation";
+import {default as JobLocation} from "./JobLocation";
 import JobDate from "./JobDate";
 import EducationalRequirements from "./EducationalRequirements";
 import {JobPosting} from "@/ducks/jobs/types";
@@ -25,13 +25,10 @@ const JobPostingRender = ({posting, preview, isLive}: JobPostingProps) => {
         datePosted,
         employmentType,
         description,
-        validThrough,
         educationalRequirements,
         experienceRequirements,
         experienceInPlaceOfEducation,
-        emailRecipient,
         filename,
-        applicationInstructions,
         timestamp
     } = posting;
 

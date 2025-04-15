@@ -8,7 +8,6 @@ export interface JobPostingLDProps {
 
 export default function JobPostingLD({posting}: JobPostingLDProps) {
     const {
-        id,
         title,
         jobLocation,
         datePosted,
@@ -18,10 +17,6 @@ export default function JobPostingLD({posting}: JobPostingLDProps) {
         educationalRequirements,
         experienceRequirements,
         experienceInPlaceOfEducation,
-        emailRecipient,
-        filename,
-        applicationInstructions,
-        timestamp
     } = posting;
 
     const ldJSON: any = {
