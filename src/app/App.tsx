@@ -7,7 +7,7 @@ import {selectPreview} from "@/ducks/jobs";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import useMediaQuery from '@mui/material/useMediaQuery';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import {theme} from "@/app/theme";
 

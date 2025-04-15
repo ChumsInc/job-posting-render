@@ -35,35 +35,6 @@ const JobPostingRender = ({posting, preview, isLive}: JobPostingProps) => {
         timestamp
     } = posting;
 
-    const ldJSON: object = {
-        "@context": 'https://schema.org/',
-        '@type': 'JobPosting',
-        title,
-        description,
-        hiringOrganization: {
-            "@type": 'Organization',
-            name: 'Chums, Inc',
-            sameAs: 'https://chums.com',
-            logo: "https://intranet.chums.com/images/chums-logo-badge-400px.png",
-        },
-        specialCommitments: 'VeteranCommit, MilitarySpouseCommit',
-        datePosted,
-        validThrough,
-        jobLocation: {
-            '@type': 'Place',
-            address: {
-                '@type': 'PostalAddress',
-                ...jobLocationLD(jobLocation),
-            }
-        },
-        employmentType,
-        educationalRequirements,
-        experienceRequirements: {
-            monthsOfExperience: experienceRequirements,
-        },
-        experienceInPlaceOfEducation,
-    }
-
     return (
         <ErrorBoundary FallbackComponent={ErrorBoundaryFallbackAlert}>
             <JobPostingLD posting={posting}/>
