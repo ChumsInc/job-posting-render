@@ -1,11 +1,10 @@
 import React from "react";
-import {EmploymentTypes, JobPosting} from "../ducks/jobs";
 import {default as JobLocation, jobLocationLD} from "./JobLocation";
 import JobDate from "./JobDate";
 import EducationalRequirements from "./EducationalRequirements";
-import ErrorBoundary from "chums-ducks/dist/components/ErrorBoundary";
-import './job-openings.css'
-import {Alert} from "chums-ducks";
+import {JobPosting} from "../ducks/jobs/types";
+import { ErrorBoundary } from "react-error-boundary";
+import {employmentTypes} from "../ducks/jobs/constants";
 
 interface JobPostingProps {
     posting: JobPosting
@@ -23,15 +22,14 @@ const JobPostingRender: React.FC<JobPostingProps> = ({posting}) => {
         educationalRequirements,
         experienceRequirements,
         experienceInPlaceOfEducation,
-        emailRecipient,
-        filename,
-        applicationInstructions,
-        timestamp
+        filename
     } = posting;
 
-    const ldJSON: any = {
+    const ldJSON: object = {
         "@context": 'https://schema.org/',
         '@type': 'JobPosting',
+        title,
+        description,
         hiringOrganization: {
             "@type": 'Organization',
             name: 'Chums, Inc',
@@ -52,20 +50,18 @@ const JobPostingRender: React.FC<JobPostingProps> = ({posting}) => {
         },
         employmentType,
         educationalRequirements,
+        experienceRequirements: {
+            monthsOfExperience: experienceRequirements,
+        },
         experienceInPlaceOfEducation,
     }
 
-    if (!!experienceRequirements) {
-        ldJSON.experienceRequirements = {
-            monthsOfExperience: experienceRequirements,
-        }
-    }
-
     return (
-        <ErrorBoundary>
+        <ErrorBoundary fallback={<div>Something went wrong with Job Postings</div>}>
             <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(ldJSON)}}/>
-            <section className="job-opening" id={'job-posting--' + id}>
-                <h2 className="job-opening--title">{title}</h2>
+            <section vocab="https://schema.org" typeof="JobPosting" className="job-opening" id={'job-posting--' + id}>
+                <h2 property="title" className="job-opening--title">{title}</h2>
+                <meta property="specialCommitments" content="VeteranCommit"/>
                 <section>
                     <h3>Location</h3>
                     <JobLocation location={jobLocation}/>
@@ -78,13 +74,13 @@ const JobPostingRender: React.FC<JobPostingProps> = ({posting}) => {
                 </section>
                 <section>
                     <h3>Employment Type</h3>
-                    <div>
-                        {EmploymentTypes[employmentType]}
+                    <div property="employmentType">
+                        {employmentTypes[employmentType]}
                     </div>
                 </section>
                 <section className="job-opening--description">
                     <h3>Description</h3>
-                    <div dangerouslySetInnerHTML={{__html: description}}/>
+                    <div property="description" dangerouslySetInnerHTML={{__html: description}}/>
                 </section>
                 <section>
                     <h3>Education and Experience Requirements</h3>
@@ -96,32 +92,9 @@ const JobPostingRender: React.FC<JobPostingProps> = ({posting}) => {
                 </section>
                 <section>
                     <h3>How to Apply</h3>
-                    {!filename && (
-                        <Alert title="Uh oh!" color="warning">The job description has not been uploaded.</Alert>
-                    )}
-                    <ul>
-                        {!!filename && (
-                            <li>
-                                <a href={`https://intranet.chums.com/pdf/jobs/${filename}`}
-                                   target="_blank" rel="noopener">
-                                    Download Job Description
-                                </a>
-                            </li>
-                        )}
-                        {!!applicationInstructions && (
-                            <li>
-                                {applicationInstructions}
-                            </li>
-                        )}
-                        <li>
-                            <a href={`mailto:${emailRecipient || 'jobs@chums.com'}?subject=${encodeURIComponent(title)}`}
-                               target="_blank" rel="noopener">
-                                Email your resume to {emailRecipient || 'jobs@chums.com'}
-                            </a>
-                        </li>
-                    </ul>
+                    <a href={`https://intranet.chums.com/pdf/jobs/${filename}`} target="_blank">Download Job Description</a>
+                    <div>Email your resume to <a href={`mailto:jobs@chums.com?subject=${encodeURIComponent(title)}`} target="_blank">jobs@chums.com</a></div>
                 </section>
-                <small>Last Updated: {new Date(timestamp).toLocaleString()}</small>
             </section>
         </ErrorBoundary>
     )

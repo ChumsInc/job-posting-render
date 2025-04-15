@@ -10,6 +10,7 @@ const App: React.FC = () => {
     const dispatch = useDispatch();
     const query = parseQuery(location.search);
 
+    console.log(query);
     const id = Number(query.id);
     const preview = !!query.preview;
 
@@ -31,7 +32,7 @@ const App: React.FC = () => {
                     This is just a preview and could possibly have errors or is not a live posting.
                 </Alert>
             )}
-            <JobPostingsList preview={preview}/>
+            <JobPostingsList/>
         </div>
     )
 }
