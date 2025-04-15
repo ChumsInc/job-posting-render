@@ -1,25 +1,50 @@
-import {createReducer} from "@reduxjs/toolkit";
-import {jobPostingsSorter, loadJobPostings} from "./actions";
 import {JobPosting} from "./types";
+import {createEntityAdapter, createSlice} from "@reduxjs/toolkit";
+import {loadJobPostings} from "./actions";
 
-export interface JobState {
-    list: JobPosting[],
-    loading: boolean,
+
+const jobsAdapter = createEntityAdapter<JobPosting, number>({
+    selectId: (arg) => arg.id,
+    sortComparer: (a, b) => a.id - b.id,
+});
+
+const selectors = jobsAdapter.getSelectors();
+
+export interface JobsState {
+    status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
+    preview: boolean;
 }
 
-const initialJobState: JobState = {
-    list: [],
-    loading: false,
+const initialState: JobsState = {
+    preview: false,
+    status: 'idle',
 }
 
-const listReducer = (state: JobPosting[] = initialJobState.list, action: JobPostingsAction) => {
-    const {type, payload} = action;
-    switch (type) {
-    case fetchJobsSucceeded:
-        return payload || [];
-    default:
-        return state;
+const jobsSlice = createSlice({
+    name: 'jobs',
+    initialState: jobsAdapter.getInitialState(initialState),
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(loadJobPostings.pending, (state, action) => {
+                state.status = 'pending';
+                state.preview = action.meta.arg.preview ?? false;
+            })
+            .addCase(loadJobPostings.fulfilled, (state, action) => {
+                state.status = 'fulfilled'
+                jobsAdapter.setAll(state, action.payload);
+            })
+            .addCase(loadJobPostings.rejected, (state) => {
+                state.status = 'rejected';
+            })
+    },
+    selectors: {
+        selectList: (state) => selectors.selectAll(state),
+        selectStatus: (state) => state.status,
+        selectPreview: (state) => state.preview,
     }
-}
+})
 
-export default jobsReducer;
+export const {selectList, selectStatus, selectPreview} = jobsSlice.selectors;
+
+export default jobsSlice;

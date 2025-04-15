@@ -1,14 +1,14 @@
 import React from 'react';
-import {ValidEmploymentType} from "../ducks/jobs/types";
-import {employmentTypes} from "../ducks/jobs/constants";
+import {EmploymentTypes, ValidEmploymentType} from "@/ducks/jobs/types";
 
 interface JobEmploymentTypeProps {
     type: ValidEmploymentType,
 }
-const JobEmploymentType:React.FC<JobEmploymentTypeProps> = ({type}) => {
+
+const JobEmploymentType = ({type}: JobEmploymentTypeProps) => {
     return (
         <div>
-            {employmentTypes[type]}
+            {EmploymentTypes[type]}
         </div>
     );
 };

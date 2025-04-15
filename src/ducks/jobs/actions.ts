@@ -1,22 +1,18 @@
-import {selectLoading} from "./selectors";
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {JobPosting, LoadJobPosting} from "./types";
-import {fetchJobPostings} from "./api";
-import {RootState} from "../../app/configureStore";
+import {JobPosting} from "./types";
+import {RootState} from "@/app/configureStore";
+import {fetchJobOpening, FetchJobPostingsProps} from "./api";
+import {selectStatus} from "@/ducks/jobs/index";
 
-export const loadJobPostings = createAsyncThunk<JobPosting[], LoadJobPosting>(
+export const loadJobPostings = createAsyncThunk<JobPosting[], FetchJobPostingsProps, { state: RootState }>(
     'jobs/load',
     async (arg) => {
-        return fetchJobPostings(arg);
-    }, {
+        return await fetchJobOpening(arg);
+    },
+    {
         condition: (arg, {getState}) => {
-            const state = getState() as RootState;
-            return !selectLoading(state);
+            const state = getState();
+            return selectStatus(state) === 'idle';
         }
     }
 )
-
-
-export const jobPostingsSorter = (a:JobPosting, b:JobPosting) => {
-    return a.id > b.id ? 1 : -1;
-}

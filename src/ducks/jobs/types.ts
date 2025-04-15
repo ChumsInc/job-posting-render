@@ -1,3 +1,4 @@
+
 export declare type ValidEmploymentType =
     'FULL_TIME'
     | 'PART_TIME'
@@ -9,6 +10,17 @@ export declare type ValidEmploymentType =
     | 'OTHER';
 
 export type EmploymentTypeMap = { [employmentType in ValidEmploymentType]: string }
+
+export const EmploymentTypes: EmploymentTypeMap = {
+    FULL_TIME: 'Full Time',
+    PART_TIME: 'Part Time',
+    CONTRACTOR: 'Contractor',
+    TEMPORARY: 'Temporary',
+    INTERN: 'Intern',
+    VOLUNTEER: 'Volunteer',
+    PER_DIEM: 'Per Diem',
+    OTHER: 'Other',
+}
 
 export interface BaseSalary {
     value?: number,
@@ -30,12 +42,9 @@ export interface JobPosting {
     educationalRequirements: string,
     experienceRequirements: number
     experienceInPlaceOfEducation: boolean,
+    emailRecipient?: string,
+    applicationInstructions?: string,
     filename: string,
     timestamp: string,
     changed?: boolean,
-}
-
-export interface LoadJobPosting {
-    id?: number | string,
-    preview?: boolean
 }
