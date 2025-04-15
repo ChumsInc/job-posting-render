@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * DO NOT REMOVE - this is used by chums.com/pages/
+ */
 
 $manifest = file_get_contents('./public/js/manifest.json');
 $decoded = json_decode($manifest, true);
