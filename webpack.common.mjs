@@ -49,6 +49,8 @@ export default {
             maxInitialRequests: 30,
             enforceSizeThreshold: 50000,
             cacheGroups: {
+                // if you need to split out more chunks, make sure the Shopify theme
+                //    pages are fixed to load in the additional chunks.
                 defaultVendors: {
                     test: /[\\/]node_modules[\\/]/,
                     name: 'vendors',

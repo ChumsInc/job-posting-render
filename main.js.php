@@ -1,7 +1,7 @@
 <?php
 
 /**
- * DO NOT REMOVE - this is used by chums.com/pages/
+ * DO NOT REMOVE - this is used by chums.com/pages/careers
  */
 
 $manifest = file_get_contents('./public/js/manifest.json');
